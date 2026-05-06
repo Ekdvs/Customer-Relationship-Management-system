@@ -28,3 +28,5 @@ const roleMiddleware = (requiredRole) => {
         }
     }
 }
+
+export default roleMiddleware;

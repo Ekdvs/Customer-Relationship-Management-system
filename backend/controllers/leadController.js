@@ -1,8 +1,10 @@
-import { get } from "mongoose";
+
+import Activity from "../models/activity.js";
+import Lead from "../models/leadModel.js";
 import User from "../models/userModel.js";
 import { assignLeadToUser } from "../services/assignmentService.js";
-import { calculateLeadScore } from "../services/leadScoringService.js";
-import { Activity } from "react";
+import { calculateLeadScore, getPriority } from "../services/leadScoringService.js";
+
 
 //create lead
 export const createLead = async (request, response) => {
@@ -30,7 +32,7 @@ export const createLead = async (request, response) => {
         const assignedTo = users.length > 0 ? assignLeadToUser(users) : null;
 
         const score = calculateLeadScore(request.body);
-        const priority =getLeadPriority(score);
+        const priority =getPriority(score);
 
         const lead = await Lead.create({
             ...request.body,
@@ -43,7 +45,7 @@ export const createLead = async (request, response) => {
             {
                 lead: lead._id,
                 message: `Lead created and assigned to ${assignedTo ? assignedTo.name : "no one"}`,
-                type: "Lead Created",
+                type: "lead_created",
                 createdBy: request.userId
             }
         )
@@ -130,7 +132,7 @@ export const updateLead = async (request, response) => {
             {
                 lead: lead._id,
                 message: `Lead updated with data: ${JSON.stringify(updatedData)}`,
-                type: "Lead Updated",
+                type: "lead_updated",
                 createdBy: request.userId
             }
         )
@@ -140,7 +142,7 @@ export const updateLead = async (request, response) => {
                 {
                     lead: lead._id,
                     message: `Lead status changed from ${lead.status} to ${updatedData.status}`,
-                    type: "Status Changed",
+                    type: "status_changed",
                     createdBy: request.userId
                 }
             )
@@ -189,7 +191,7 @@ export const deleteLead = async (request, response) => {
             {
                 lead: lead._id,
                 message: "Lead deleted",
-                type: "Lead Deleted",
+                type: "lead_deleted",
                 createdBy: request.userId
             }
         )

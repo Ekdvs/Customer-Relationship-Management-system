@@ -1,4 +1,4 @@
-import Activity from "../models/activity";
+import Activity from "../models/activity.js";
 
 //get activity by lead id
 export const getActivityByLeadId = async (request, response) => { 

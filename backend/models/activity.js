@@ -12,7 +12,7 @@ const activitySchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["created", "updated", "status_changed", "note_added"],
+      enum: ["lead_created", "lead_updated", "status_changed", "note_added", "lead_deleted"],
       default: "updated",
     },
     createdBy: {
