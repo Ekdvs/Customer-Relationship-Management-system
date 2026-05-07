@@ -6,7 +6,7 @@ import generateAccessToken from "../utils/generatedAccesToken.js";
 export const loginUser = async (request, response) => {
     try {
         const { email, password } = request.body;
-
+        
         if (!email || !password) {
             return response.status(400).json({
                 success: false,
@@ -16,6 +16,7 @@ export const loginUser = async (request, response) => {
         }
 
         const user = await User.findOne({ email }).select("+password");
+        
 
         if (!user) {
             return response.status(404).json({
@@ -79,7 +80,7 @@ export const registerUser = async (request, response) => {
             });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 16);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User({
             name,

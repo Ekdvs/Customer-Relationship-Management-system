@@ -6,17 +6,28 @@ import activityRouter from "./routes/activityRoutes.js";
 import dashboardRouter from "./routes/dashboardRoutes.js";
 import leadRouter from "./routes/leadRoutes.js";
 import noteRouter from "./routes/noteRoutes.js";
+import cors from "cors";
 
 configDotenv();
 const app =express();
+
+app.use(
+    cors(
+        {
+            origin: [   process.env.FRONTEND_URL || "http://localhost:5173"],
+        }
+    )
+)
 
 //add middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+
+
 //api routes
 
-app.use("/api/users",userRouter);
+
 app.use("/api/auth", userRouter);
 app.use("/api/leads", leadRouter);
 app.use("/api/notes", noteRouter);

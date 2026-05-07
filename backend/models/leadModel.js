@@ -20,7 +20,7 @@ const leadSchema = new mongoose.Schema(
         },
         leadSource:{
             type:String,
-            required:[  true,"Please enter lead source"],
+            enum:["Website", "LinkedIn", "Referral", "Other"],
         },
         assignedTo:{
             type:mongoose.Schema.Types.ObjectId,
