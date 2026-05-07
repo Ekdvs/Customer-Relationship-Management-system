@@ -9,15 +9,19 @@ import noteRouter from "./routes/noteRoutes.js";
 import cors from "cors";
 
 configDotenv();
-const app =express();
+
+const app = express();
 
 app.use(
-    cors(
-        {
-            origin: [   process.env.FRONTEND_URL || "http://localhost:5173"],
-        }
-    )
-)
+  cors({
+    origin: [
+      process.env.FRONTEND_URL,
+      "http://localhost:5173",
+      "https://customer-relationship-management-sy-five.vercel.app",
+    ].filter(Boolean),
+    credentials: true,
+  })
+);
 
 //add middleware
 app.use(express.json());
